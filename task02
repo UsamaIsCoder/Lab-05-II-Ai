@@ -1,0 +1,42 @@
+# Importing necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Defining the dataset based on the provided data
+data = {
+    "Area": [2600, 3000, 3200, 3600, 4000],
+    "Price": [550000, 565000, 610000, 680000, 725000]
+}
+df = pd.DataFrame(data)
+
+# Separating features and target variable
+X = df[['Area']]  # Independent variable
+y = df['Price']   # Dependent variable
+
+# Creating and training the linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predicting prices for the new areas
+new_areas = np.array([[5000], [8000], [9000]])
+new_predictions = model.predict(new_areas)
+
+# Plotting the results
+plt.figure(figsize=(10, 6))
+plt.scatter(X, y, color='blue', label='Actual Data', s=50)  # Actual data points
+plt.plot(X, model.predict(X), color='red', label='Regression Line', linewidth=2)  # Regression line
+plt.scatter(new_areas, new_predictions, color='green', label='Predicted Points', marker='x', s=100)  # Predictions
+
+# Adding labels and legend
+plt.title("Linear Regression: Area vs Price", fontsize=16)
+plt.xlabel("Area (sq ft)", fontsize=12)
+plt.ylabel("Price ($)", fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# Outputting the predictions for the new areas
+for area, price in zip(new_areas.flatten(), new_predictions):
+    print(f"Predicted Price for area {area} sq ft: ${price:,.2f}")
