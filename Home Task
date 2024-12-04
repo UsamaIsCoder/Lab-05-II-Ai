@@ -1,0 +1,39 @@
+# Importing necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Creating the stationary dataset (time vs sales)
+data_stationary = {
+    "Time": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "Sales": [120, 130, 125, 135, 128, 132, 127, 133, 130, 129]
+}
+df_stationary = pd.DataFrame(data_stationary)
+
+# Separating features and target variable
+X_stationary = df_stationary[['Time']]  # Independent variable (Time)
+y_stationary = df_stationary['Sales']   # Dependent variable (Sales)
+
+# Creating and training the linear regression model
+model_stationary = LinearRegression()
+model_stationary.fit(X_stationary, y_stationary)
+
+# Predicting sales using the model
+y_pred_stationary = model_stationary.predict(X_stationary)
+
+# Visualizing the results
+plt.figure(figsize=(10, 6))
+plt.scatter(X_stationary, y_stationary, color='blue', label='Actual Data', s=50)  # Actual data points
+plt.plot(X_stationary, y_pred_stationary, color='red', label='Regression Line', linewidth=2)  # Regression line
+plt.title("Linear Regression: Time vs Sales (Stationary Data)", fontsize=16)
+plt.xlabel("Time", fontsize=12)
+plt.ylabel("Sales", fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# Output the predictions
+output_stationary_predictions = {time: f"{sales:,.2f}" for time, sales in zip(X_stationary.flatten(), y_pred_stationary)}
+for time, prediction in output_stationary_predictions.items():
+    print(f"Predicted Sales for Time {time}: {prediction}")
