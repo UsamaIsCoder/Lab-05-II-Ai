@@ -1,0 +1,46 @@
+# Lab-05-II-Ai
+# Importing necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Defining the dataset based on the provided image data
+data = {
+    "Area": [2600, 3000, 3200, 3600, 4000],
+    "Price": [550000, 565000, 610000, 680000, 725000]
+}
+df = pd.DataFrame(data)
+
+# Separating features and target variable
+X = df[['Area']]  # Independent variable
+y = df['Price']   # Dependent variable
+
+# Creating and training the linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predicting prices for the given areas
+y_pred = model.predict(X)
+
+# Predicting price for an area of 2500 sq ft
+area_input = np.array([[2500]])
+predicted_price = model.predict(area_input)
+
+# Getting model parameters
+intercept = model.intercept_
+coefficient = model.coef_[0]
+
+# Visualizing the results
+plt.scatter(X, y, color='blue', label='Actual Data')
+plt.plot(X, y_pred, color='red', label='Regression Line')
+plt.title("Linear Regression: Area vs Price")
+plt.xlabel("Area (sq ft)")
+plt.ylabel("Price")
+plt.legend()
+plt.show()
+
+# Output results
+print(f"Intercept: {intercept}")
+print(f"Coefficient: {coefficient}")
+print(f"Predicted Price for area 2500 sq ft: {predicted_price[0]}")
